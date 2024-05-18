@@ -22,6 +22,7 @@ export class DocumentService {
           success: true,
           statusCode: 201,
           message: 'Document Added Successfully',
+          document:newDoc
         };
       } else {
         return {
@@ -36,14 +37,25 @@ export class DocumentService {
     }
   }
 
-  async getDocument(userId) {
+  async getDocument(userId,query,raw) {
     try {
+
       const doc = await this.Prisma.document.findMany({
         where: {
           userId: userId,
           isArchived: false,
+          title:{contains:query,mode:"insensitive"}
         },
       });
+
+      if(query != "" || raw){
+        console.log("inside serarch",doc)
+        return {
+          statusCode: 201,
+          message: 'Document Fetched Successfully',
+          document: doc,
+        };
+      }
 
       function buildTree(documents, parentId = null) {
         const children = documents.filter(
