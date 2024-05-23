@@ -14,8 +14,11 @@ import { DocumentService } from './document.service';
 import { AuthGuard } from 'src/user/guards/authGuards';
 import { updateDocument } from './dto/updateDocument.dto';
 import { archieveDocumentDto } from './dto/archieve.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @UseGuards(AuthGuard)
+@ApiBearerAuth("JWT-auth")
+@ApiTags("Document")
 @Controller('document')
 export class DocumentController {
   constructor(private documentService: DocumentService) {}
