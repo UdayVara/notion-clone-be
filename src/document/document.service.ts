@@ -48,7 +48,7 @@ export class DocumentService {
         },
       });
 
-      if(query != "" || raw){
+      if(query != "" && raw){
         console.log("inside serarch",doc)
         return {
           statusCode: 201,
@@ -70,6 +70,8 @@ export class DocumentService {
       }
 
       const filteredData = buildTree(doc);
+
+      console.log(filteredData)
       if (doc.length > 0) {
         return {
           statusCode: 201,
